@@ -1,0 +1,33 @@
+name: My First CI Pipeline
+
+# ТРИГГЕР: запускать, когда кто-то делает push в ветку main
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    # На каком "железе" запускать пайплайн (GitHub дает свои Linux-сервера)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Стягиваем наш код из репозитория на этот сервер
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Проверка линтером (просто имитируем проверку стиля)
+      - name: Lint code
+        run: |
+          echo "Running linter..."
+          # Здесь могла бы быть команда типа 'flake8 app.py'
+
+      # 3. Сборка Docker-образа (АРТЕФАКТ)
+      - name: Build Docker Image
+        run: |
+          docker build -t my-app:latest .
+          echo "Image built successfully!"
+
+      # 4. Юнит-тест (проверяем, что контейнер вообще запускается)
+      - name: Run Test
+        run: |
+          docker run my-app:latest | grep "Hello, DevOps World!"
