@@ -1,2 +1,2 @@
-print("Hello, DevOps World!")
+print("Hello, DevOps World! V2")
 # Это очень простое приложение, которое просто выводит текст
